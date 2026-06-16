@@ -1,0 +1,174 @@
+call plug#begin()
+Plug 'vim-scripts/indentpython.vim'
+Plug 'nvie/vim-flake8'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'ekalinin/Dockerfile.vim'
+Plug 'dense-analysis/ale'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'i3d/vim-jimbothemes'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'ryanoasis/vim-devicons'
+Plug 'tpope/vim-fugitive'
+Plug '4munix/vim-xai'
+call plug#end()
+
+"--- general -------------------------------------------------------------------
+set number
+set background=light
+set termguicolors
+set t_Co=256
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+set wildmenu
+set showmatch
+set incsearch
+set hlsearch
+set foldcolumn=5
+set modeline
+set modelines=5
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set backspace=indent,eol,start
+set ruler
+syntax on
+set showcmd
+set shellslash
+set encoding=utf-8
+filetype indent on
+filetype plugin on
+set textwidth=80        " break lines when line length increases
+set linebreak
+set wrap
+set mouse=a
+set ttymouse=xterm2
+set cc=80
+set guifont="UbuntuMono  Nerd Font":h11
+set cursorline
+se foldmethod=manual
+autocmd BufRead * normal zR
+set relativenumber
+set formatoptions=
+set formatoptions=ql
+colorscheme github
+
+"---vim x-ai plugin ------------------------------------------------------------
+let g:vim_xai_token = "your xai token"
+
+"--- mappings ------------------------------------------------------------------
+nnoremap <space> za
+let mapleader = ","
+nnoremap <C-F> :Files<CR>
+nnoremap <leader>m :silent make <CR> :redraw! <CR>
+nnoremap <leader>r :silent make run <CR> :redraw! <CR>
+nnoremap <leader>p :put=system('perl ' . @%) <CR>
+nnoremap <leader>y :!clear; python3 %<CR>
+nnoremap <F4> :silent !clear<CR> :redraw!<CR>
+:map <C-T> :tabe <CR>
+nnoremap <C-Q> :q <CR>
+nnoremap <C-S> :w<CR>
+
+"---auto commands---------------------------------------------------------------
+augroup netrw
+    autocmd!
+    autocmd FileType netrw setlocal number relativenumber
+augroup END
+" /***    yaml ****************************************************************/
+augroup yamlOpts
+    autocmd!
+    autocmd Filetype yaml setlocal expandtab
+                \ sw=2 sts=2 ts=2
+augroup END
+" /***    markdown    *********************************************************/
+augroup markdownOpts
+    autocmd!
+    autocmd Filetype markdown setlocal expandtab
+                \ sw=4 sts=4 ts=4
+augroup END
+" /***    c    ****************************************************************/
+augroup cOpts
+    autocmd!
+    autocmd Filetype c setlocal noexpandtab
+                \ sw=0 sts=0 ts=8
+augroup END
+" /***    make    *************************************************************/
+augroup makeOpts
+    autocmd!
+    autocmd Filetype make setlocal noexpandtab
+                \ sw=0 sts=0 ts=8
+augroup END
+" /***    perl    *************************************************************/
+augroup perlOpts
+    autocmd!
+    autocmd Filetype perl setlocal expandtab
+                \ sw=4 sts=4 ts=4
+                \ setlocal makeprg=perl\ -Wc\ %\ $*
+augroup END
+" /***    python    ***********************************************************/
+augroup pythonOpts
+    autocmd!
+    autocmd Filetype python setlocal expandtab
+                \ sw=4 sts=4 ts=4
+augroup END
+" /***    java    *************************************************************/
+augroup JavaOpts
+    autocmd!
+    autocmd Filetype java setlocal expandtab
+                \ sw=4 sts=4 ts=4
+augroup END
+
+"--- airline -------------------------------------------------------------------
+let g:airline_theme = 'light'
+let g:airline#extensions#tabline#enabled = 1
+
+"--- nerdtree ------------------------------------------------------------------
+:map <C-N> :NERDTreeToggle<CR>
+let NERDTreeShowLineNumbers=1
+" {{{
+" Do not show these files in NERDTree.
+" }}}
+let NERDTreeIgnore = ['__pycache__', '*.pyc']
+let g:NERDTreeWinSize=30
+
+" --------------------------------------------------
+" ALE Settings https://github.com/dense-analysis/ale
+" --------------------------------------------------
+"  see also :h ale-options
+"  Disable ALE on startup
+let g:ale_enabled = 0
+"  Toggle ALE
+nnoremap    <silent>    <F1>    :ALEToggle<CR>
+" python linting: python -m pip install pylint
+let g:ale_linters={
+            \ 'python': ['pylint'],
+            \ 'c': ['clang', 'gcc'],
+            \}
+" Preview window
+set previewpopup=height:10,width:60
+" Colors
+hi signcolumn ctermbg=black
+hi clear ALEErrorSign
+hi ALEErrorSign cterm=None ctermfg=red
+hi ALEError ctermfg=red
+hi ALEErrorLine ctermfg=red
+hi clear ALEWarningSign
+hi ALEWarningSign cterm=None ctermfg=5
+hi ALEWarning ctermfg=magenta
+hi ALEWarningLine ctermfg=magenta
+hi ALEInfo ctermfg=lightblue
+hi ALEInfoLine ctermfg=lightblue
+let g:ale_close_preview_on_insert = 1
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '!'
+let g:ale_completion_enabled = 1
+let g:ale_set_ballons = 1
+" Don't show that annoying text inside the code while working
+" let g:ale_virtualtext_cursor = 0
+" let g:ale_set_highlights = 0
