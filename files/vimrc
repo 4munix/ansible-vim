@@ -95,8 +95,8 @@ augroup END
 " /***    c    ****************************************************************/
 augroup cOpts
     autocmd!
-    autocmd Filetype c setlocal noexpandtab
-                \ sw=0 sts=0 ts=8
+    autocmd Filetype c setlocal expandtab
+                \ sw=4 sts=4 ts=4
 augroup END
 " /***    make    *************************************************************/
 augroup makeOpts
@@ -109,7 +109,7 @@ augroup perlOpts
     autocmd!
     autocmd Filetype perl setlocal expandtab
                 \ sw=4 sts=4 ts=4
-                \ setlocal makeprg=perl\ -Wc\ %\ $*
+                \ makeprg=perl\ -Wc\ %\ $*
 augroup END
 " /***    python    ***********************************************************/
 augroup pythonOpts
