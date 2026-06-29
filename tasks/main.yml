@@ -43,7 +43,10 @@
   changed_when: false
 
 - name: vim commands to install plugins
-  ansible.builtin.shell: su - {{ user }} -c 'vim -c "PlugInstall" -c "q" -c "q"'
+  # Press enter (echo) in case of an error and a return is needed.
+  ansible.builtin.shell: >
+    echo | su - {{ user }} -c 'vim -c "PlugInstall" -c "q" -c "q"'
+    >/dev/null 2>&1
   changed_when: false
 
 - name: Enable colorscheme
