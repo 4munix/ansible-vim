@@ -19,7 +19,7 @@ call plug#end()
 
 "--- general -------------------------------------------------------------------
 set number
-set background=light
+set background=dark
 set termguicolors
 set t_Co=256
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -57,7 +57,7 @@ autocmd BufRead * normal zR
 set relativenumber
 set formatoptions=
 set formatoptions=ql
-colorscheme github
+colorscheme mountaineer
 
 "---vim x-ai plugin ------------------------------------------------------------
 let g:vim_xai_token = "your xai token"
@@ -97,6 +97,9 @@ augroup cOpts
     autocmd!
     autocmd Filetype c setlocal expandtab
                 \ sw=4 sts=4 ts=4
+                \ cindent
+                \ autoindent
+                \ smartindent
 augroup END
 " /***    make    *************************************************************/
 augroup makeOpts
@@ -109,7 +112,7 @@ augroup perlOpts
     autocmd!
     autocmd Filetype perl setlocal expandtab
                 \ sw=4 sts=4 ts=4
-                \ makeprg=perl\ -Wc\ %\ $*
+                \ setlocal makeprg=perl\ -Wc\ %\ $*
 augroup END
 " /***    python    ***********************************************************/
 augroup pythonOpts
@@ -125,7 +128,7 @@ augroup JavaOpts
 augroup END
 
 "--- airline -------------------------------------------------------------------
-let g:airline_theme = 'light'
+let g:airline_theme = 'ayu'
 let g:airline#extensions#tabline#enabled = 1
 
 "--- nerdtree ------------------------------------------------------------------
